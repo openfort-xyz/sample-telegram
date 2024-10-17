@@ -1,0 +1,11 @@
+.connect-button {
+    margin: 16px auto 0;
+}
+
+.connect-button:hover {
+    border-color: #ff6600;
+}
+
+.mint-button {
+    margin: 16px 24px 16px auto;
+}
