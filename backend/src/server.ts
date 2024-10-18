@@ -16,7 +16,7 @@ app.use(express.json());
 const PORT = process.env.SERVER_PORT || 3005;
 
 // Define a route
-app.get('/', (req: Request, res: Response) => {
+app.get('/api/healthz', (req: Request, res: Response) => {
     res.send('OK');
 });
 
