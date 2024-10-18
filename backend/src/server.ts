@@ -1,16 +1,16 @@
 import dotenv from 'dotenv';
 dotenv.config();
-
 import express, { Request, Response } from 'express';
 import {createEncryptionSession} from "./api/create-encryption-session";
 import {createSession} from "./api/create-session";
 import {collect} from "./api/collect";
 import {revokeSession} from "./api/revoke-session";
-
+import cors from 'cors';
 
 // Create an instance of Express
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 // Define the port number
 const PORT = process.env.SERVER_PORT || 3005;

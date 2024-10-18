@@ -9,6 +9,7 @@ import {
     TypedDataField
 } from '@openfort/openfort-js';
 import openfort from '../utils/openfortConfig';
+import axios from 'axios';
 
 const chainId = Number(import.meta.env.VITE_CHAIN_ID);
 
@@ -32,19 +33,17 @@ class OpenfortService {
     }
     async mintNFT(identityToken: string): Promise<string | null> {
       try {
-        const collectResponse = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/protected-collect`, {
-          method: "POST",
+        const collectResponse = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/protected-collect`, {}, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${identityToken}`,
           },
         });
-
-        if (!collectResponse.ok) {
+        if (collectResponse.status >= 400) {
           alert("Failed to mint NFT status: " + collectResponse.status);
           return null
         }
-        const collectResponseJSON = await collectResponse.json();
+        const collectResponseJSON = await collectResponse.data.json();
 
         if (collectResponseJSON.data?.nextAction) {
           const response = await openfort.sendSignatureTransactionIntentRequest(
@@ -95,18 +94,17 @@ class OpenfortService {
     async getEncryptionSession(): Promise<string> {
         console.log('Creating encryption session');
         console.log(import.meta.env.VITE_BACKEND_URL)
-      const resp = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/protected-create-encryption-session`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+        const resp = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/protected-create-encryption-session`,{}, {
+            headers: {
+            "Content-Type": "application/json",
+            },
+        });
 
-        if (!resp.ok) {
+        if (resp.status >= 400) {
             throw new Error("Failed to create encryption session");
         }
 
-        const respJSON = await resp.json();
+        const respJSON = await resp.data.json();
         return respJSON.session;
     }
 
