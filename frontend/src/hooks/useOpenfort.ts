@@ -33,7 +33,7 @@ export const useOpenfort = () => {
       await openfortService.authenticateWithThirdPartyProvider(identityToken);
     } catch (error) {
       console.error('Error authenticating with Openfort:', error);
-      setError(error instanceof Error ? error : new Error('An error occurred during Openfort authentication'));
+      throw error;
     }
   }, []);
 

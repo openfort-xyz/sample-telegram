@@ -43,12 +43,11 @@ class OpenfortService {
           alert("Failed to mint NFT status: " + collectResponse.status);
           return null
         }
-        const collectResponseJSON = await collectResponse.data.json();
 
-        if (collectResponseJSON.data?.nextAction) {
+        if (collectResponse.data.data?.nextAction) {
           const response = await openfort.sendSignatureTransactionIntentRequest(
-            collectResponseJSON.data.id,
-            collectResponseJSON.data.nextAction.payload.userOperationHash
+              collectResponse.data.data.id,
+              collectResponse.data.data.nextAction.payload.userOperationHash
           );
           return response.response?.transactionHash ?? null
         }else return null
@@ -104,8 +103,7 @@ class OpenfortService {
             throw new Error("Failed to create encryption session");
         }
 
-        const respJSON = await resp.data.json();
-        return respJSON.session;
+        return resp.data.session;
     }
 
     async setAutomaticRecoveryMethod(identityToken: string) {

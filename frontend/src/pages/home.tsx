@@ -20,11 +20,19 @@ export const HomePage: FC = () => {
 
         authenticateWithOpenfort(initDataRaw).then(() => {
             console.log("Authenticated!");
+        }).catch((error) => {
+            console.error("Failed to authenticate:", error);
+            openfortService.logout().then(() => {
+                console.log("Logged out");
+            }).catch((error) => {
+                console.error("Failed to logout:", error);
+            });
         });
 
     };
 
     useEffect(() => {
+        console.log("Embedded state changed:", embeddedState);
         if (embeddedState === EmbeddedState.UNAUTHENTICATED) {
             authenticate();
         }
@@ -43,7 +51,12 @@ export const HomePage: FC = () => {
                {embeddedState === EmbeddedState.EMBEDDED_SIGNER_NOT_CONFIGURED ? (
                   <button className="connect-button" onClick={() => openfortService.setAutomaticRecoveryMethod(initDataRaw!)}>Connect Wallet</button>
                 ) : embeddedState === EmbeddedState.READY ? (
-                  <button className="mint-button">Mint</button>
+                    <>
+                        <div>
+                            <button className="mint-button">Mint</button>
+                        </div>
+                        <a onClick={() => openfortService.logout()} className="disconnect-text">Logout</a>
+                    </>
                 ) : (
                   <div className="spinner"></div>
                 )}
