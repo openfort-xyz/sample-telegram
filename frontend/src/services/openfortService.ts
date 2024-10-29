@@ -10,7 +10,6 @@ import {
 } from '@openfort/openfort-js';
 import openfort from '../utils/openfortConfig';
 import axios from 'axios';
-import {ShieldAuthProvider} from "@openfort/openfort-node/models/preGenerateEmbeddedAccountRequest";
 
 const chainId = Number(import.meta.env.VITE_CHAIN_ID);
 
@@ -113,7 +112,7 @@ class OpenfortService {
         const shieldAuth: ShieldAuthentication = {
           auth: ShieldAuthType.OPENFORT,
           token: identityToken,
-          authProvider: ShieldAuthProvider.TELEGRAM_MINI_APP,
+          authProvider: "telegramMiniApp",
           tokenType: "customToken",
           encryptionSession: await this.getEncryptionSession(),
         };
