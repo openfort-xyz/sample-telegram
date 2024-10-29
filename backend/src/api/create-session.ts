@@ -18,7 +18,7 @@ export async function createSession(
 
   try {
     const response = await openfort.iam.verifyOAuthToken({
-      provider: 'firebase',
+      provider: 'telegramMiniApp',
       token: accessToken,
       tokenType: 'idToken',
     });

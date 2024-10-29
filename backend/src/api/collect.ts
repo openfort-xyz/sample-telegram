@@ -20,7 +20,7 @@ export async function collect(
 
   try {
     const response = await openfort.iam.verifyOAuthToken({
-      provider: 'firebase',
+      provider: 'telegramMiniApp',
       token: accessToken,
       tokenType: 'idToken',
     });
