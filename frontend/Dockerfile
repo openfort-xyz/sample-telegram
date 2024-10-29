@@ -14,4 +14,4 @@ RUN yarn build
 
 # Start the api server
 CMD [ "yarn", "start" ]
-EXPOSE 3005
+EXPOSE 3006
